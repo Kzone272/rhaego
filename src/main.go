@@ -23,21 +23,19 @@ func main() {
 	height := 500
 	numPixels := width * height
 
-	chans := make([]chan color.NRGBA, numPixels)
+	ch := make(chan color.NRGBA)
 
 	image := image.NewNRGBA(image.Rect(0, 0, width, height))
 	for x := 0; x < width; x++ {
 		for y := 0; y < height; y++ {
-			ch := pixel(x, y)
-			i := x * height + y
-			chans[i] = ch
+			pixel(x, y, ch)
 		}
 	}
 
 	for i := 0; i < numPixels; i++ {
 		x := i / height
 		y := i % height
-		colour := <- chans[i]
+		colour := <- ch
 		image.Set(x, y, colour)
 	}
 
@@ -48,13 +46,9 @@ func main() {
 	check(err)
 }
 
-func pixel(x int, y int) chan color.NRGBA {
-	ch := make(chan color.NRGBA)
-
+func pixel(x int, y int, ch chan color.NRGBA) {
 	go func () {
 		colour := color.NRGBA{0, 128, 255, uint8(rand.Int() % 256)} // azure
 		ch <- colour
 	}()
-
-	return ch
 }
