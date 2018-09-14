@@ -23,7 +23,7 @@ func main() {
 	height := 500
 	numPixels := width * height
 
-	ch := make(chan color.NRGBA)
+	ch := make(chan PixelMessage)
 
 	image := image.NewNRGBA(image.Rect(0, 0, width, height))
 	for x := 0; x < width; x++ {
@@ -33,10 +33,8 @@ func main() {
 	}
 
 	for i := 0; i < numPixels; i++ {
-		x := i / height
-		y := i % height
-		colour := <- ch
-		image.Set(x, y, colour)
+		pixel := <- ch
+		image.Set(pixel.x, pixel.y, pixel.colour)
 	}
 
 	err = png.Encode(f, image)
@@ -46,9 +44,16 @@ func main() {
 	check(err)
 }
 
-func pixel(x int, y int, ch chan color.NRGBA) {
+// PixelMessage is the position and colour of a pixel
+type PixelMessage struct {
+	x int
+	y int
+	colour color.NRGBA
+}
+
+func pixel(x int, y int, ch chan PixelMessage) {
 	go func () {
 		colour := color.NRGBA{0, 128, 255, uint8(rand.Int() % 256)} // azure
-		ch <- colour
+		ch <- PixelMessage{ x, y, colour }
 	}()
 }
