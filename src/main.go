@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "fmt"
 	"os"
 	"syscall"
 	"image/color"
@@ -23,7 +24,8 @@ func main() {
 	height := 500
 	numPixels := width * height
 
-	ch := make(chan PixelMessage)
+	// Is this buffered channel unnecessairly large?
+	ch := make(chan PixelMessage, numPixels)
 
 	image := image.NewNRGBA(image.Rect(0, 0, width, height))
 	for x := 0; x < width; x++ {
