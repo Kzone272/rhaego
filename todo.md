@@ -2,7 +2,7 @@
 
 - [x] save a PNG
 - [x] create a goroutine for each pixel
-- [ ] use a single channel for all pixel goroutines
+- [x] use a single channel for all pixel goroutines
 - [ ] create a sphere with intersect method
 - [ ] cast ray for each pixel into all objects
 - [ ] colour based on angle or something
