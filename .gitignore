@@ -2,3 +2,6 @@ output
 
 # mac files
 .DS_Store
+
+# binary
+rhaego
