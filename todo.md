@@ -25,7 +25,8 @@
 
 - [ ] order rays in some way that allows a low-res render of the whole image to come in before any area gets more detail filled in
   - fill more than just pixel coming in, expecting it to be overwritten as more detail is filled in
-  - maybe pixels at x, y ∈ 2^n then 2^n-1, etc.  gradually filling in squares half the size of the previous level
+    - maybe pixels at x, y ∈ 2^n then 2^n-1, etc.  gradually filling in squares half the size of the previous level
+    - MentalRay renderer in 3DS Max does something fancy with hexagons which probably looks prettier
 - [ ] live OpenGl renderer
   - render to a texture, draw quad with that texture
 - [ ] some sort of space partitioning
